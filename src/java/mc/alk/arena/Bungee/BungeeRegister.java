@@ -10,14 +10,13 @@ import org.bukkit.plugin.*;
  */
 public class BungeeRegister {
     private Plugin thisPlugin;
+    public BungeeRegister(Plugin plugin){
+    plugin.getServer().getMessenger().registerIncomingPluginChannel(plugin,"BungeeCord",new ChannelListener());
+    plugin.getServer().getMessenger().registerIncomingPluginChannel(plugin,"BattleArena",new ChannelListener());
 
-    public BungeeRegister(Plugin plugin) {
-        plugin.getServer().getMessenger().registerIncomingPluginChannel(plugin, "BungeeCord", new ChannelListener());
-        plugin.getServer().getMessenger().registerIncomingPluginChannel(plugin, "BattleArena", new ChannelListener());
-
-        plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin, "BungeeCord");
-        plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin, "BattleArena");
-        thisPlugin = plugin;
-        new ChannelSender("GetServer");//This sets the server name.
+    plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin,"BungeeCord");
+    plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin,"BattleArena");
+    thisPlugin = plugin;
+    new ChannelSender("GetServer");//This sets the server name.
     }
 }

@@ -133,22 +133,22 @@ public class BattleArena extends JavaPlugin {
         FileUpdater.makeIfNotExists(new File(dir + "/otherPluginConfigs"));
         FileUpdater.makeIfNotExists(new File(dir + "/victoryConditions"));
 
-        for (String c : new String[]{"HeroesConfig", "McMMOConfig", "WorldGuardConfig"}) {
-            try {
-                new BaseConfig(FileUtil.load(clazz, dir.getPath() + "/otherPluginConfigs/" + c + ".yml",
-                        "/default_files/otherPluginConfigs/" + c + ".yml"));
-            } catch (Exception e) {
-                Log.err("Couldn't load File " + dir.getPath() + "/otherPluginConfigs/" + c + ".yml");
+        for (String c : new String[]{"HeroesConfig", "McMMOConfig", "WorldGuardConfig"}){
+            try{
+                new BaseConfig(FileUtil.load(clazz, dir.getPath() + "/otherPluginConfigs/"+c+".yml",
+                        "/default_files/otherPluginConfigs/"+c+".yml"));
+            } catch( Exception e ){
+                Log.err("Couldn't load File " + dir.getPath() + "/otherPluginConfigs/"+c+".yml");
                 Log.printStackTrace(e);
             }
         }
 
-        for (String c : new String[]{"AllKills", "KillLimit", "MobKills", "PlayerKills"}) {
-            try {
-                new BaseConfig(FileUtil.load(clazz, dir.getPath() + "/victoryConditions/" + c + ".yml",
-                        "/default_files/victoryConditions/" + c + ".yml"));
-            } catch (Exception e) {
-                Log.err("Couldn't load File " + dir.getPath() + "/otherPluginConfigs/" + c + ".yml");
+        for (String c : new String[]{"AllKills", "KillLimit", "MobKills","PlayerKills"}){
+            try{
+                new BaseConfig(FileUtil.load(clazz, dir.getPath() + "/victoryConditions/"+c+".yml",
+                        "/default_files/victoryConditions/"+c+".yml"));
+            } catch( Exception e ){
+                Log.err("Couldn't load File " + dir.getPath() + "/otherPluginConfigs/"+c+".yml");
                 Log.printStackTrace(e);
             }
         }
@@ -301,11 +301,10 @@ public class BattleArena extends JavaPlugin {
      * If there are updates then it will announce the newer version to the console. It will download the newer
      * jar if the "update" variable is true.
      * This happens in an asynchronous manner to not lag the server while checking for the update
-     *
-     * @param plugin         BattleArena extension plugin
-     * @param bukkitId       the bukkit id of this plugin
-     * @param file           File from the bukkit plugin, use this.getFile()
-     * @param updateOption   whether we should update the plugin or simply announce that there is a newer version
+     * @param plugin BattleArena extension plugin
+     * @param bukkitId the bukkit id of this plugin
+     * @param file File from the bukkit plugin, use this.getFile()
+     * @param updateOption whether we should update the plugin or simply announce that there is a newer version
      * @param announceOption whether we should update the plugin or simply announce that there is a newer version
      */
     public static void update(final Plugin plugin, final int bukkitId, final File file,
@@ -315,7 +314,6 @@ public class BattleArena extends JavaPlugin {
 
     /**
      * Return the BattlePluginsAPI used by BattleArena
-     *
      * @return BattlePluginsAPI
      */
     public BattlePluginsAPI getBattlePluginsAPI() {
@@ -324,7 +322,6 @@ public class BattleArena extends JavaPlugin {
 
     /**
      * Return the watch controller
-     *
      * @return WatchController
      */
     public WatchController getWatchController() {
@@ -332,56 +329,46 @@ public class BattleArena extends JavaPlugin {
     }
 
     /**
-     * NONE get no releases,
-     * RELEASE get only release updates, ignore beta/alpha,
-     * BETA get beta/release updates, but ignore alpha builds,
-     * ALL get all updates
+     NONE get no releases,
+     RELEASE get only release updates, ignore beta/alpha,
+     BETA get beta/release updates, but ignore alpha builds,
+     ALL get all updates
      */
-    public enum UpdateOption {
-        NONE/** get no releases*/
-        ,
-        RELEASE/** get only release updates, ignore beta/alpha*/
-        ,
-        BETA/** get beta/release updates, but ignore alpha builds*/
-        ,
-        ALL/** get all updates*/
-        ;
+    public enum UpdateOption{
+        NONE/** get no releases*/,
+        RELEASE/** get only release updates, ignore beta/alpha*/,
+        BETA/** get beta/release updates, but ignore alpha builds*/,
+        ALL/** get all updates*/;
 
-        public static UpdateOption fromString(String name) {
+        public static UpdateOption fromString(String name){
             try {
                 return valueOf(name.toUpperCase());
-            } catch (Exception e) {
+            } catch(Exception e) {
                 if (name.equalsIgnoreCase("ALPHA")) return ALL;
                 return null;
             }
         }
-
         public PluginUpdater.UpdateOption toPluginUpdater() {
             return PluginUpdater.UpdateOption.fromString(this.name());
         }
     }
 
     /**
-     * NONE don't show new versions
-     * CONSOLE show only to console log on startup
-     * OPS announce to ops on join, will only show this message once per server start
+     NONE don't show new versions
+     CONSOLE show only to console log on startup
+     OPS announce to ops on join, will only show this message once per server start
      */
     public enum AnnounceUpdateOption {
-        NONE/** don't show new versions*/
-        ,
-        CONSOLE/** show only to console log on startup*/
-        ,
-        OPS/** announce to ops on join, will only show this message once per server start*/
-        ;
-
-        public static AnnounceUpdateOption fromString(String name) {
+        NONE/** don't show new versions*/,
+        CONSOLE/** show only to console log on startup*/,
+        OPS/** announce to ops on join, will only show this message once per server start*/;
+        public static AnnounceUpdateOption fromString(String name){
             try {
                 return valueOf(name.toUpperCase());
-            } catch (Exception e) {
+            } catch(Exception e) {
                 return null;
             }
         }
-
         public PluginUpdater.AnnounceUpdateOption toPluginUpdater() {
             return PluginUpdater.AnnounceUpdateOption.fromString(this.name());
         }
@@ -538,7 +525,6 @@ public class BattleArena extends JavaPlugin {
 
     /**
      * The main serializer for the config.yml
-     *
      * @return BAConfigSerializer
      */
     public BAConfigSerializer getBAConfigSerializer() {
@@ -690,7 +676,6 @@ public class BattleArena extends JavaPlugin {
 
     /**
      * Get the module directory
-     *
      * @return File: Module Directory
      */
     public File getModuleDirectory() {
@@ -699,7 +684,6 @@ public class BattleArena extends JavaPlugin {
 
     /**
      * Return the Arena Editor Executor
-     *
      * @return ArenaEditorExecutor
      */
     public ArenaEditorExecutor getArenaEditorExecutor() {

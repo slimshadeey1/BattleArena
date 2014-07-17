@@ -11,7 +11,7 @@ public class BungeeHooks {
         BungeeHooks.server = server;
     }
 
-    public static String getServer() {
+    public static String getServer(){
         return server;
     }
 }
