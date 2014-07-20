@@ -14,6 +14,7 @@ public class RawCommandHandler {
     private Integer argsLength;
     private ArrayList<String> args = new ArrayList<>();
 
+    @Deprecated
     public RawCommandHandler(byte[] data, DataInputStream info) {
         try {
             subChannel = info.readUTF();

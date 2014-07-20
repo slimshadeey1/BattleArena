@@ -16,18 +16,15 @@ public class ChannelSender {
     private Plugin plugin = BattleArena.getSelf();
     private String server = BungeeHooks.getServer();
 
-
-    public ChannelSender(String subChannel, ArrayList<String> message, String id) {
+    public ChannelSender(String subChannel, ArrayList<String> message) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream(); //Converted
         DataOutputStream data = new DataOutputStream(bytes); //Message will be
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
         //Define Sub Channel
         out.writeUTF(subChannel);
-
+        out.writeUTF(server);
         try {
-            data.writeUTF(server);
-            data.writeUTF(id);
             for (String s : message) {
                 data.writeUTF(s);
             }
@@ -39,42 +36,8 @@ public class ChannelSender {
         plugin.getServer().sendPluginMessage(plugin, "BattleArena", out.toByteArray());
     }
 
-    public ChannelSender(String subChannel, String command, String playerName, ArrayList<String> args, ArrayList<String> response, boolean commandresponse) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream(); //Converted
-        DataOutputStream data = new DataOutputStream(bytes); //Message will be
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        //Define Sub Channel
-        out.writeUTF(subChannel);
-        if (commandresponse) {
-            try {
-                data.writeUTF(server);
-                data.writeUTF(playerName);
-                data.writeUTF(command);
-                ByteArrayOutputStream bytes1 = new ByteArrayOutputStream(); //Converted
-                DataOutputStream subOut = new DataOutputStream(bytes1);
-                for (String s : args) {
-                    subOut.writeUTF(s);
-                }
-                data.writeInt(bytes1.toByteArray().length);
-                data.write(bytes1.toByteArray());
-                ByteArrayOutputStream bytes2 = new ByteArrayOutputStream(); //Converted
-                DataOutputStream subOut1 = new DataOutputStream(bytes2);
-                for (String s : response) {
-                    subOut1.writeUTF(s);
-                }
-                data.writeInt(bytes2.toByteArray().length);
-                data.write(bytes2.toByteArray());
-            } catch (IOException e) {
-            }
-            out.writeShort(bytes.toByteArray().length);
-            out.write(bytes.toByteArray());
-        }
-
-
-        plugin.getServer().sendPluginMessage(plugin, "BattleArena", out.toByteArray());
-    }
-
-    public ChannelSender(String subChannel, String targets, ArrayList<String> message) {
+    @Deprecated
+    public ChannelSender(String subChannel, String targets, ArrayList<String> message, boolean forward) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream(); //Converted
         DataOutputStream data = new DataOutputStream(bytes); //Message will be
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
