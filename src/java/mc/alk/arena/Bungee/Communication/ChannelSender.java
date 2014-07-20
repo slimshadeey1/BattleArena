@@ -17,7 +17,7 @@ public class ChannelSender {
     private String server = BungeeHooks.getServer();
 
 
-    public ChannelSender(String subChannel, ArrayList<String> message, Integer id) {
+    public ChannelSender(String subChannel, ArrayList<String> message, String id) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream(); //Converted
         DataOutputStream data = new DataOutputStream(bytes); //Message will be
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
@@ -27,10 +27,10 @@ public class ChannelSender {
 
         try {
             data.writeUTF(server);
+            data.writeUTF(id);
             for (String s : message) {
                 data.writeUTF(s);
             }
-            data.writeShort(id);
         } catch (IOException e) {
         }
         out.writeShort(bytes.toByteArray().length);

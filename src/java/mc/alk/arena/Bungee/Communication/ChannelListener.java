@@ -35,7 +35,7 @@ public class ChannelListener implements PluginMessageListener {
                         in.readFully(msgbytes);
                         msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
                         GameNames gameNames = new GameNames(msgin.readBoolean());
-                        new ChannelSender("GameNames", gameNames.getNames(), 0);
+                        new ChannelSender("GameNames", gameNames.getNames(), "0");
                         break;
 
                     case "getEventNames":
@@ -44,7 +44,7 @@ public class ChannelListener implements PluginMessageListener {
                         in.readFully(msgbytes);
                         msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
                         EventNames eventNames = new EventNames(msgin.readBoolean());//Change to Event
-                        new ChannelSender("EventNames", eventNames.getNames(), 0);//Change to Event
+                        new ChannelSender("EventNames", eventNames.getNames(), "0");//Change to Event
                         break;
 
                     case "BattleArenaCommand":            /* I would like the rest of the channels to be executed in this fashion. */
@@ -52,12 +52,13 @@ public class ChannelListener implements PluginMessageListener {
                         msgbytes = new byte[len];
                         in.readFully(msgbytes);
                         msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
-                        CommandExec CommandExec = new CommandExec(msgbytes,msgin);//Change to Event
+                        RawCommandHandler cleanCommand = new RawCommandHandler(msgbytes, msgin);//Change to Event
+                        new CommandExec(cleanCommand.getCommand(), cleanCommand.getPlayerName(), cleanCommand.getArgs()); //This takes the cleanCommand and sends it to the correct executor.
                         break;
-
                     case "BattleTeams":
 
                     case "BattlePlayers":
+                        String server = in.readUTF();
 
                     case "BattleStats":
 
