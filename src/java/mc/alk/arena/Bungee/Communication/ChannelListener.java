@@ -7,8 +7,10 @@ import org.bukkit.entity.*;
 import org.bukkit.plugin.messaging.*;
 
 import java.io.*;
+import java.util.*;
 
 /**
+ *
  * Created by Ben Byers on 7/17/2014.
  */
 public class ChannelListener implements PluginMessageListener {
@@ -41,15 +43,24 @@ public class ChannelListener implements PluginMessageListener {
                         msgbytes = new byte[len];
                         in.readFully(msgbytes);
                         msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
-                        rawData = msgin.readUTF();
                         EventNames eventNames = new EventNames(msgin.readBoolean());//Change to Event
                         new ChannelSender("EventNames", eventNames.getNames(), 0);//Change to Event
                         break;
 
-                    case "CommandResponse":            /* I would like the rest of the channels to be executed in this fashion. */
+                    case "BattleArenaCommand":            /* I would like the rest of the channels to be executed in this fashion. */
+                        len = in.readShort();
+                        msgbytes = new byte[len];
+                        in.readFully(msgbytes);
+                        msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
+                        CommandExec CommandExec = new CommandExec(msgbytes,msgin);//Change to Event
+                        break;
+
                     case "BattleTeams":
+
                     case "BattlePlayers":
+
                     case "BattleStats":
+
                 }
             } catch (IOException x) {
             }
