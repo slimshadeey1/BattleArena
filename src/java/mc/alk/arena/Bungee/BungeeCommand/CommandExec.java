@@ -13,7 +13,16 @@ import java.util.*;
  * Created by Ben Byers on 7/18/2014.
  */
 public class CommandExec {
-    public CommandExec(String command, String playerName, ArrayList<String> args) {
+    public CommandExec(ArrayList<String> data, String server) {
+        String playerName = data.get(0);
+        String command = data.get(1);
+        ArrayList<String> args = new ArrayList<>();
+        for (String s : data) {
+            if (data.indexOf(s) <= 1) {
+                return;
+            }
+            args.add(s);
+        }
         Player player = BattleArena.getSelf().getServer().getPlayer(playerName);
         String fullCommand = command;
         for (String s : args) {

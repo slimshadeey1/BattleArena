@@ -18,77 +18,40 @@ public class ChannelListener implements PluginMessageListener {
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
         if (channel.equals("BattleArena")) {
 
-
-            ByteArrayDataInput in = ByteStreams.newDataInput(message);
+            try {
+                DataInputStream in = new DataInputStream(new ByteArrayInputStream(message));
             String subchannel = in.readUTF();
             String server;
-            short len;
-            byte[] msgbytes;
-            DataInputStream msgin;
             // Use the code sample in the 'Response' sections below to read
             // the data.
-            try {
                 switch (subchannel) { ///TODO Cleanup this entire class, redo it with BAConverter use instead of any other methods.
                     case "getGameNames":
-                        server = in.readUTF();
-                        len = in.readShort();
-                        msgbytes = new byte[len];
-                        in.readFully(msgbytes);
-                        msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
-                        GameNames gameNames = new GameNames(msgin.readBoolean());
-                        new ChannelSender("GameNames", gameNames.getNames());
+                        BAConverter game = new BAConverter(in);
+                        GameNames gameNames = new GameNames(game.getData());
                         break;
-
                     case "getEventNames":
-                        server = in.readUTF();
-                        len = in.readShort();
-                        msgbytes = new byte[len];
-                        in.readFully(msgbytes);
-                        msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
-                        EventNames eventNames = new EventNames(msgin.readBoolean());//Change to Event
-                        new ChannelSender("EventNames", eventNames.getNames());//Change to Event
+                        BAConverter event = new BAConverter(in);
+                        EventNames eventNames = new EventNames(event.getData());
                         break;
-
                     case "BattleArenaCommand":            /* I would like the rest of the channels to be executed in this fashion. */
-                        server = in.readUTF();
-                        len = in.readShort();
-                        msgbytes = new byte[len];
-                        in.readFully(msgbytes);
-                        msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
-                        RawCommandHandler cleanCommand = new RawCommandHandler(msgbytes, msgin);//Change to Event
-                        new CommandExec(cleanCommand.getCommand(), cleanCommand.getPlayerName(), cleanCommand.getArgs()); //This takes the cleanCommand and sends it to the correct executor.
+                        BAConverter command = new BAConverter(in);
+                        new CommandExec(command.getData(), command.getServer());
                         break;
                     case "BattleTeams":
-                        server = in.readUTF();
-                        len = in.readShort();
-                        msgbytes = new byte[len];
-                        in.readFully(msgbytes);
-                        msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
-
+                        BAConverter team = new BAConverter(in);
+                        break;
                     case "BattlePlayers":
-                        server = in.readUTF();
-                        len = in.readShort();
-                        msgbytes = new byte[len];
-                        in.readFully(msgbytes);
-                        msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
-
+                        BAConverter players = new BAConverter(in);
+                        break;
                     case "BattleStats":
-                        server = in.readUTF();
-                        len = in.readShort();
-                        msgbytes = new byte[len];
-                        in.readFully(msgbytes);
-                        msgin = new DataInputStream(new ByteArrayInputStream(msgbytes));
-
+                        BAConverter stats = new BAConverter(in);
+                        break;
                 }
             } catch (IOException x) {
             }
         } else if (channel.equals("BungeeCord")) {
             ByteArrayDataInput in = ByteStreams.newDataInput(message);
             String subchannel = in.readUTF();
-            String rawData;
-            short len;
-            byte[] msgbytes;
-            DataInputStream msgin;
             // Use the code sample in the 'Response' sections below to read
             // the data.
             try {
