@@ -1,106 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
-    <name>BattleArena</name>
+    <packaging>jar</packaging>
     <version>3.9.7.9</version>
+    <name>BattleArena</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <url>http://maven.apache.org</url>
-    <build>
-        <sourceDirectory>${basedir}/src/java</sourceDirectory>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh</artifactId>
-                <version>2.4</version>
-            </extension>
-        </extensions>
-        <defaultGoal>install</defaultGoal>
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>${basedir}</directory>
-                <includes>
-                    <include>plugin.yml</include>
-                    <include>default_files/*</include>
-                    <include>default_files/competitions</include>
-                    <include>default_files/competitions/*</include>
-                    <include>default_files/otherPluginConfigs</include>
-                    <include>default_files/otherPluginConfigs/*</include>
-                    <include>default_files/victoryConditions</include>
-                    <include>default_files/victoryConditions/*</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/tests</directory>
-                <excludes>
-                    <exclude>**/*</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <finalName>${project.name}</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <relocations>
-                                <relocation>
-                                    <pattern>mc.battleplugins.api</pattern>
-                                    <shadedPattern>mc.alk.mc.battleplugins.api</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>mc.alk.plugin.updater</pattern>
-                                    <shadedPattern>mc.alk.mc.updater</shadedPattern>
-                                </relocation>
-                            </relocations>
-                            <artifactSet>
-                                <includes>
-                                    <include>mc.alk:BattleScoreboardAPI</include>
-                                    <include>mc.alk:BattlePluginUpdater</include>
-                                    <include>mc.battleplugins:BattlePluginsAPI</include>
-                                </includes>
-                            </artifactSet>
-                            <minimizeJar>true</minimizeJar>
-                            <filters>
-                                <filter>
-                                    <artifact>mc.alk:BattleScoreboardAPI</artifact>
-                                    <includes>
-                                        <include>mc/alk/scoreboardapi/**</include>
-                                    </includes>
-                                </filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <configuration>
-                    <links>
-                        <link>http://jd.bukkit.org/dev/apidocs/</link>
-                    </links>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <!-- Locations for jar repositories -->
     <repositories>
         <repository>
             <id>battleplugins-repo</id>
@@ -127,7 +37,34 @@
             <url>http://repo.kitteh.org/content/repositories/public/</url>
         </repository>
     </repositories>
+    <!-- Dependencies -->
     <dependencies>
+        <!-- Dependencies that have maven repos -->
+<!--        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>BattleProfiler</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+		-->
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>BattlePluginUpdater</artifactId>
+            <version>1.4.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>mc.battleplugins</groupId>
+            <artifactId>BattlePluginsAPI</artifactId>
+            <version>1.0.6</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>mc.alk</groupId>
+            <artifactId>BattleScoreboardAPI</artifactId>
+            <version>1.1.8.5</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleTracker</artifactId>
@@ -145,16 +82,6 @@
             <artifactId>LibsDisguises</artifactId>
             <version>7.9.8-SNAPSHOT</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spigot-api</artifactId>
-                    <groupId>org.spigotmc</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>ProtocolLib</artifactId>
-                    <groupId>com.comphenix.protocol</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.gmail.nossr50.mcMMO</groupId>
@@ -185,29 +112,8 @@
             <artifactId>worldguard</artifactId>
             <version>5.8.1-SNAPSHOT</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>worldedit</artifactId>
-                    <groupId>com.sk89q</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commandbook</artifactId>
-                    <groupId>com.sk89q</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>iconomy</artifactId>
-                    <groupId>com.nijikokun</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>prtree</artifactId>
-                    <groupId>org.khelekore</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>opencsv</artifactId>
-                    <groupId>net.sf.opencsv</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
+        <!-- unknown plugins that I had to add to the repo -->
         <dependency>
             <groupId>unknown.plugins</groupId>
             <artifactId>CombatTag</artifactId>
@@ -268,20 +174,119 @@
             <version>0.4</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>unknown.plugins</groupId>
             <artifactId>VanishNoPacket</artifactId>
             <version>3.18.10</version>
             <scope>provided</scope>
         </dependency>
+        <!-- test dependencies -->
     </dependencies>
+    <!-- How we will compile the plugin -->
+    <build>
+        <finalName>${project.name}</finalName>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.4</version>
+            </extension>
+        </extensions>
+        <defaultGoal>install</defaultGoal>
+        <!-- Where our source directory is -->
+        <sourceDirectory>${basedir}/src/java</sourceDirectory>
+        <!-- Include all the resources we need -->
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>plugin.yml</include>
+                    <include>default_files/*</include>
+                    <include>default_files/competitions</include>
+                    <include>default_files/competitions/*</include>
+                    <include>default_files/otherPluginConfigs</include>
+                    <include>default_files/otherPluginConfigs/*</include>
+                    <include>default_files/victoryConditions</include>
+                    <include>default_files/victoryConditions/*</include>
+                </includes>
+            </resource>
+            <!-- Exclude JUnit test directory -->
+            <resource>
+                <directory>src/tests</directory>
+                <excludes>
+                    <exclude>**/*</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- Specify how we build the plugin.jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <!-- Shade (includes these in the final jar) -->
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>mc.battleplugins.api</pattern>
+                                    <shadedPattern>mc.alk.mc.battleplugins.api</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.alk.plugin.updater</pattern>
+                                    <shadedPattern>mc.alk.mc.updater</shadedPattern>
+                                </relocation>
+                            </relocations>
+
+                            <artifactSet>
+                                <includes>
+                                    <include>mc.alk:BattleScoreboardAPI</include>
+                                    <include>mc.alk:BattlePluginUpdater</include>
+                                    <include>mc.battleplugins:BattlePluginsAPI</include>
+                                </includes>
+                            </artifactSet>
+                            <!-- Specify to remove all unneeded classes -->
+                            <minimizeJar>true</minimizeJar>
+                            <filters>
+                                <filter>
+                                    <artifact>mc.alk:BattleScoreboardAPI</artifact>
+                                    <includes>
+                                        <include>mc/alk/scoreboardapi/**</include>
+<!--                                        <include>mc/alk/profiling/**</include>-->
+                                    </includes>
+
+                                </filter>
+                            </filters>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <links>
+                        <link>http://jd.bukkit.org/dev/apidocs/</link>
+                    </links>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
     <distributionManagement>
         <repository>
             <id>battleplugins-repo</id>
             <url>scp://server.battleplugins.com/var/www/server.battleplugins.com/htdocs/maven/repository</url>
         </repository>
     </distributionManagement>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 </project>
