@@ -36,29 +36,6 @@ public class ChannelSender {
         plugin.getServer().sendPluginMessage(plugin, "BattleArena", out.toByteArray());
     }
 
-    @Deprecated
-    public ChannelSender(String subChannel, String targets, ArrayList<String> message, boolean forward) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream(); //Converted
-        DataOutputStream data = new DataOutputStream(bytes); //Message will be
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-
-        //Define Sub Channel
-        out.writeUTF("Forward");
-        out.writeUTF(targets);
-        out.writeUTF(subChannel);
-
-        try {
-            for (String s : message) {
-                data.writeUTF(s);
-            }
-        } catch (IOException e) {
-        }
-        out.writeShort(bytes.toByteArray().length);
-        out.write(bytes.toByteArray());
-
-        plugin.getServer().sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
-    }
-
     public ChannelSender(String option, Player player, String arg) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
