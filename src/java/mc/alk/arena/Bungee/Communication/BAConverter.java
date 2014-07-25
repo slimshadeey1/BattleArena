@@ -37,4 +37,8 @@ public class BAConverter {
     public String getServer() {
         return server;
     }
+
+    public String getSubChannel() {
+        return subChannel;
+    }
 }

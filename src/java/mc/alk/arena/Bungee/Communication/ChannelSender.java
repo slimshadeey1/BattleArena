@@ -10,6 +10,8 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * This class is dedicated to sending commands on a channel of your choice. This is a
+ * constructor, so you need to create a new instance each time you send a message.
  * Created by Ben Byers on 7/17/2014.
  */
 public class ChannelSender {

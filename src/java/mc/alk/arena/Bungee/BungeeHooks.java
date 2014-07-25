@@ -20,11 +20,7 @@ public class BungeeHooks {
         return server;
     }
 
-    public static String getPlayerServer(Player player) {
-        ArrayList<String> name = new ArrayList<>();
-        name.add(player.getName());
-        UUID uuid = UUID.fromString(player.getName());
-        new ChannelSender("BattlePlayers", name, uuid.toString()); //I will be changing all of this to a map in my next commit. I cannot track the data accurately this way I have attempted.
+    public static String getPlayerServer() { //TODO I need to initialize this upon execution of a command. This might need to be a constructor.
         return playerServer;
     }
 }
