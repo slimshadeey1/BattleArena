@@ -53,7 +53,7 @@
                 </dependency>
                 -->
         <dependency>
-            <groupId>mc.alk</groupId>
+            <groupId>io.github.slimshadeey1</groupId>
             <artifactId>ChannelBukkitAPI</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
