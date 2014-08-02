@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>mc.alk</groupId>
     <artifactId>BattleArena</artifactId>
@@ -12,6 +13,10 @@
     <url>http://maven.apache.org</url>
     <!-- Locations for jar repositories -->
     <repositories>
+        <repository>
+            <id>snapshots</id>
+            <url>http://vpn.byersmediasolutions.com:8081/nexus/content/repositories/snapshots/</url>
+        </repository>
         <repository>
             <id>battleplugins-repo</id>
             <url>http://server.battleplugins.com/maven/repository/</url>
@@ -40,13 +45,19 @@
     <!-- Dependencies -->
     <dependencies>
         <!-- Dependencies that have maven repos -->
-<!--        <dependency>
-            <groupId>mc.alk</groupId>
-            <artifactId>BattleProfiler</artifactId>
-            <version>1.0</version>
+        <!--        <dependency>
+                    <groupId>mc.alk</groupId>
+                    <artifactId>BattleProfiler</artifactId>
+                    <version>1.0</version>
+                    <scope>compile</scope>
+                </dependency>
+                -->
+        <dependency>
+            <groupId>io.github.slimshadeey1</groupId>
+            <artifactId>ChannelBukkitAPI</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-		-->
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattlePluginUpdater</artifactId>
@@ -260,7 +271,7 @@
                                     <artifact>mc.alk:BattleScoreboardAPI</artifact>
                                     <includes>
                                         <include>mc/alk/scoreboardapi/**</include>
-<!--                                        <include>mc/alk/profiling/**</include>-->
+                                        <!--                                        <include>mc/alk/profiling/**</include>-->
                                     </includes>
 
                                 </filter>
