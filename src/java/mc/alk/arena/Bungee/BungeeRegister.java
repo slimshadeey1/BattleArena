@@ -1,6 +1,6 @@
 package mc.alk.arena.Bungee;
 
-import mc.alk.arena.Bungee.Communication.*;
+import io.slimshadeey1.ChannelApi.API.*;
 import org.bukkit.plugin.*;
 
 /**
@@ -9,14 +9,8 @@ import org.bukkit.plugin.*;
  * Created by Ben Byers on 7/17/2014.
  */
 public class BungeeRegister {
-    private Plugin thisPlugin;
-    public BungeeRegister(Plugin plugin){
-    plugin.getServer().getMessenger().registerIncomingPluginChannel(plugin,"BungeeCord",new ChannelListener());
-    plugin.getServer().getMessenger().registerIncomingPluginChannel(plugin,"BattleArena",new ChannelListener());
-
-    plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin,"BungeeCord");
-    plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin,"BattleArena");
-    thisPlugin = plugin;
-    new ChannelSender("GetServer");//This sets the server name.
+    public BungeeRegister(Plugin plugin) {
+        new PluginRegister(plugin);//Initializes the channel system
+        new ChannelReceive(new ChannelListener());//Registers are listeners
     }
 }
